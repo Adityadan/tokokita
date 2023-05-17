@@ -6,6 +6,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\ProductCategoryController;
+use App\Models\ProductCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 Route::get('products', [ProductController::class, 'all']);
+Route::get('categories', [ProductCategoryController::class, 'all']);
+
+Route::get('register', [UserController::class, 'register']);
+Route::get('login', [UserController::class, 'login']);
 /* Route::get('categories', [ProductCategoryController::class, 'all']);
 
 Route::post('login', [UserController::class, 'login']);

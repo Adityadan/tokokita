@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Rules\Password;
+use Monolog\Formatter\JsonFormatter;
 
 class UserController extends Controller
 {
@@ -99,11 +100,39 @@ class UserController extends Controller
             //throw $th;
 
             # RESPON JSON APABILA GAGAL
-            return json_encode([
-                'status' => 'error',
-                'message' => $error->getMessage(),
-                'code' => $error->getCode(),
-            ]);
+            return responseFormatter::error([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 'Authentication Failed', 500);
         }
+    }
+
+    public function fetch(Request $request)
+    {
+        # MENGAMBIIL DATA USER DENGAN REQUEST HEADER ACCEPT & AUTHORIZATION
+        return ResponseFormatter::success($request->user(), 'Data Profile user behasil diambil');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        // dd($request->all());
+
+        # MENGAMBIIL DATA USER DARI REQUEST POST
+        $data = $request->all();
+
+        # MENGAMBIL DATA USER DARI DB
+        $user = Auth::user();
+
+        # UPDATE DATA USER SESUAI DENGAN REQ DB
+        $user->update($data);
+
+        return ResponseFormatter::success($user, 'Data Profile Updated');
+    }
+
+    public function logout(Request $request)
+    {
+        $token = $request->user()->currentAccessToken()->delete();
+
+        return ResponseFormatter::success($token, 'Token Revoked');
     }
 }

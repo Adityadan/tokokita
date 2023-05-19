@@ -21,14 +21,18 @@ class ProductController extends Controller
         $price_from = $request->input('price_from');
         $price_to = $request->input('price_to');
 
+        # JIKA REQ ID ADA (MENGANDUNG VALUES)
         if ($id) {
+            # CEK DATA PRODUK YANG MEMILIKI ID SESUAI REQ ID
             $product = Product::with(['category', 'galleries'])->find($id);
 
+            # JIKA CEK DATA PRODUK ADA MAKA KIRIM JSON BERISI DATA PRODUK DAN STATUS
             if ($product)
                 return ResponseFormatter::success(
                     $product,
                     'Data produk berhasil diambil'
                 );
+            # JIKA CEK DATA PRODUK TIDAK ADA MAKA KIRIM JSON BERISI DATA PRODUK NULL DAN STATUS
             else
                 return ResponseFormatter::error(
                     null,
@@ -37,6 +41,7 @@ class ProductController extends Controller
                 );
         }
 
+        # FILTER PRODUK BERDASARKAN NAMA, DESC, TAG, PRICE, DAN KATEGORI
         $product = Product::with(['category', 'galleries']);
 
         if ($name)

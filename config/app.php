@@ -171,6 +171,9 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        // Google\Recaptcha\ServiceProvider::class,
+
     ])->toArray(),
 
     /*
@@ -185,6 +188,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        // 'Recaptcha' => \Google\Recaptcha\Facades\Recaptcha::class,
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

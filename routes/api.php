@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\ProductCategoryController;
 use App\Models\ProductCategory;
+use App\Models\Transaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,6 @@ use App\Models\ProductCategory;
 */
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('user', [UserController::class, 'fetch']);
-    /* Route::post('user', [UserController::class, 'updateProfile']);
-    Route::post('logout', [UserController::class, 'logout']);
-
-    Route::get('transactions', [TransactionController::class, 'all']);
-    Route::post('checkout', [TransactionController::class, 'checkout']); */
-});
 
 
 Route::get('products', [ProductController::class, 'all']);
@@ -39,3 +32,13 @@ Route::get('login', [UserController::class, 'login']);
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']); */
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    # ROUTE UNTUK MENGAMBIL DATA USER LOGIN
+    Route::get('user', [UserController::class, 'fetch']);
+    Route::post('user', [UserController::class, 'updateProfile']);
+    Route::post('logout', [UserController::class, 'logout']);
+
+    Route::get('transaction', [TransactionController::class, 'all']);
+});

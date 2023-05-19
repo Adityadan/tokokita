@@ -18,15 +18,19 @@ class ProductCategoryController extends Controller
         $name = $request->input('name');
         $show_product = $request->input('show_product');
 
+        # JIKA ID KATEGORI ADA DAN SESUAI DENGAN ID REQUEST
         if ($id) {
+            # MAKA CEK ID KATEGORI DENGAN RELASI PRODUK SESUAI DENGAN ID REQUEST
             $category = ProductCategory::with(['products'])->find($id);
 
+            # JIKA ADA MAKA KIRIM ARRAY JSON BERISI DATA KATEGORI DAN STATUS
             if ($category)
                 return ResponseFormatter::success(
                     $category,
                     'Data kategori berhasil diambil'
                 );
             else
+                # JIKA TIDAK ADA MAKA KIRIM ARRAY JSON BERISI DATA KATEGORI NULL DAN STATUS
                 return ResponseFormatter::error(
                     null,
                     'Data kategori tidak ada',
@@ -34,6 +38,8 @@ class ProductCategoryController extends Controller
                 );
         }
 
+
+        # FILTER ID KATEGORI BERDASARKAN NAMA DAN PRODUK
         $category = ProductCategory::query();
         // dd($category);
         if ($name)
